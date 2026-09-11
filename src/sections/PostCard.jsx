@@ -1,19 +1,22 @@
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+
 const PostCard = () => {
   const videoRef = useRef(null);
+
   useGSAP(() => {
-    const lt = gsap.timeline({
-      ScrollTrigger: {
+    const tl = gsap.timeline({
+      scrollTrigger: {
         trigger: ".post-card",
         start: "top center",
         end: "bottom center",
         scrub: true,
       },
     });
+
     videoRef.current.onloadedmetadata = () => {
-      lt.to(
+      tl.to(
         videoRef.current,
         {
           currentTime: videoRef.current.duration,
@@ -24,21 +27,25 @@ const PostCard = () => {
       );
     };
   });
+
   return (
     <section className="post-card">
-      <div className="animated-gradient-bg">
-        <div className="post-card-wrapper group hover:rotate-1 hover:-[1.02] transition duration-700">
-          <img src="/images/overlay.webp" alt="" />
+      <div className="animated-gradient-bg"></div>
 
-          <video
-            src="/videos/postcard-vd.mp4"
-            muted
-            playsInline
-            preload="auto"
-          />
+      <div className="post-card-wrapper group hover:rotate-1 hover:-[1.02] transition duration-700">
+        <img src="/images/overlay.webp" />
 
-          <button className="group-hover:bg-yellow transition duration-700"></button>
-        </div>
+        <video
+          ref={videoRef}
+          muted
+          playsInline
+          preload="auto"
+          src="/videos/postcard-vd.mp4"
+        />
+
+        <button className="group-hover:bg-yellow transition duration-700">
+          Explore Leonida Keys
+        </button>
       </div>
     </section>
   );
